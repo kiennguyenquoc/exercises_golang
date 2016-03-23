@@ -1,3 +1,3 @@
 1. Doc file CSV va chen du lieu xuong PostgreSQL
 2. Tuong tu nhu tren nhung xu ly song song nhieu file cung luc.
-3. Su dung rails 2 va Sencha de tao man hinh quna ly user
+3. Su dung rails 2 va Sencha de tao man hinh quan ly user
