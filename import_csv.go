@@ -38,14 +38,10 @@ func main() {
   // connect postgresql
   dbinfo := fmt.Sprintf("user=%s host=localhost password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
   db, err := sql.Open("postgres", dbinfo)
-  if err != nil {
-    log.Fatal(err)
-  }
+  show_error(err)
 
   drop_table, err := db.Exec("DROP TABLE userinfo")
-  if err != nil {
-    fmt.Println(err)
-  }
+  show_error(err)
   fmt.Println(drop_table)
 
   create_table, err := db.Exec("CREATE TABLE userinfo ( ID SERIAL PRIMARY KEY NOT NULL, first_name TEXT NOT NULL, last_name TEXT NOT NULL, company_name TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal TEXT NOT NULL, phone1 TEXT NOT NULL, phone2 TEXT NOT NULL, email TEXT NOT NULL, web TEXT NOT NULL )" )
