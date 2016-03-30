@@ -19,24 +19,25 @@ package main
 import (
   "fmt"
   "time"
-  "log"
   "os"
   "encoding/csv"
+  "encoding/json"
   "database/sql"
   _ "github.com/lib/pq"
 )
 
-const (
-  DB_USER     = "pguser"
-  DB_PASSWORD = "kien@uit"
-  DB_NAME     = "golang"
-)
+type Configuration struct {
+  Users       []string
+  Password    []string
+  Name        []string
+}
 
 func main() {
-  fmt.Println("### - Read file CSV and import data to PostgreSQL")
   fmt.Printf("StartTime: %v\n", time.Now())
+  settings := load_config("config.json")
+  fmt.Println("### - Read file CSV and import data to PostgreSQL")
   // connect postgresql
-  dbinfo := fmt.Sprintf("user=%s host=localhost password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
+  dbinfo := fmt.Sprintf("user=%s host=localhost password=%s dbname=%s sslmode=disable", settings.Users[0], settings.Password[0], settings.Name[0])
   db, err := sql.Open("postgres", dbinfo)
   show_error(err)
 
@@ -76,3 +77,13 @@ func show_error(err error) {
   }
 }
 
+func load_config(file_name string) Configuration {
+  file, _ := os.Open(file_name)
+  decoder := json.NewDecoder(file)
+  configuration := Configuration{}
+  err := decoder.Decode(&configuration)
+  if err != nil {
+    fmt.Println("error:", err)
+  }
+  return configuration
+}

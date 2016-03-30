@@ -1,0 +1,5 @@
+{
+    "Users": ["pguser"],
+    "Password": ["kien@uit"],
+    "Name": ["golang"]
+}
