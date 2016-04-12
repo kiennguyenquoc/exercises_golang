@@ -6,7 +6,6 @@ call vundle#begin()
 
 Plugin 'xolox/vim-misc'
 Plugin 'ekalinin/Dockerfile.vim'
-"Plugin 'xolox/vim-easytags'
 Plugin 'thinca/vim-quickrun'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
@@ -18,13 +17,11 @@ Plugin 'corntrace/bufexplorer'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'tpope/vim-speeddating'
-Plugin 'itchyny/calendar.vim'
 Plugin 'HerringtonDarkholme/vim-worksheet'
 Plugin 'chrisbra/csv.vim'
 Plugin 'vim-scripts/SearchComplete'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'elzr/vim-json'
-"Plugin 'lukaszkorecki/CoffeeTags'
 Plugin 'mklabs/grunt.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'digitaltoad/vim-jade.git'
@@ -43,7 +40,6 @@ Plugin 'mkitt/tabline.vim.git'
 Plugin 'godlygeek/tabular'
 Plugin 'majutsushi/tagbar'
 Plugin 'edkolev/tmuxline.vim'
-"Plugin 'sirver/ultisnips'
 Plugin 'vim-scripts/vcscommand.vim'
 Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
@@ -63,7 +59,7 @@ Plugin 'rking/ag.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'casecommons/vim-rails'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'blackrush/vim-gocode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -143,16 +139,6 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-"" make YCM compatible with UltiSnips (using supertab)
-"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-"let g:SuperTabDefaultCompletionType = '<C-n>'
-
-"" better key bindings for UltiSnipsExpandTrigger
-"let g:UltiSnipsExpandTrigger = "<tab>"
-"let g:UltiSnipsJumpForwardTrigger = "<tab>"
-"let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
 let g:dbext_default_profile_cm_main_20141110 = 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_main_20141110'
 let g:dbext_default_profile_cm_holy= 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_holy'
 let g:dbext_default_profile_cm_org_test= 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_org_test'
@@ -164,14 +150,6 @@ let g:ctrlp_working_path_mode = 'a'
 syntax enable
 set t_Co=256
 colorscheme monokai
-"let g:solarized_termcolors=256
-"colorscheme solarized
-"if has('gui_running')
-"  set background=light
-"else
-"  "set background=dark
-"  set background=light
-"endif
 
 let g:signify_vcs_list = [ 'svn', 'git' ]
 let g:ycm_server_keep_logfiles = '1'
