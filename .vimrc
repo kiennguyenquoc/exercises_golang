@@ -5,7 +5,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'xolox/vim-misc'
-Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'thinca/vim-quickrun'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
@@ -46,12 +45,10 @@ Plugin 'fatih/vim-go'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'mhinz/vim-signify'
 Plugin 'jpalardy/vim-slime.git'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
-Plugin 'spiroid/vim-ultisnip-scala'
 Plugin 'gmarik/Vundle.vim.git'
 Plugin 'othree/xml.vim'
 Plugin 'ervandew/supertab'
@@ -59,7 +56,8 @@ Plugin 'rking/ag.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'casecommons/vim-rails'
-Plugin 'blackrush/vim-gocode'
+Plugin 'szw/vim-tags'
+Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -69,7 +67,6 @@ filetype plugin indent on    " required
 let g:ft_ignore_pat = '\.org'
 filetype plugin indent on
 filetype plugin on
-au FileType php setl ofu=phpcomplete#CompletePHP
 au FileType ruby,eruby setl ofu=rubycomplete#Complete
 au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
 au FileType c setl ofu=ccomplete#CompleteCpp
@@ -88,7 +85,9 @@ let g:utl_cfg_hdl_scm_http_system = "silent !google-chrome %u &"
 set number
 set smartindent
 " size of tabstop
+let mapleader = " "
 set tabstop=2
+set autowrite     " Automatically :write before running commands"
 set incsearch
 
 " size of an indent
@@ -104,16 +103,20 @@ nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autoshowtag = 0
 
 nnoremap <F5> :silent update<Bar>silent !google-chrome %:p &<CR>
-"nnoremap <F15>c :exe ':silent !google-chrome %'<CR>
-"nmap <silent> <leader>w :exec 'silent !google-chrome % &'
+
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_autosave = 1
+let g:go_highlight_functions = 0
+let g:go_highlight_methods = 0
+let g:go_highlight_structs = 0
+let g:go_fmt_command = "goimports"
+let g:session_autosave = 'yes'
+
 
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
 
-"let g:syntastic_disabled_filetypes=['scala', 'sbt']
 let g:syntastic_scala_checkers=['']
-"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-"nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 let g:sqlutil_keyword_case = '\U'
 let g:sqlutil_align_where = 1
@@ -122,7 +125,6 @@ let g:sqlutil_align_comma = 1
 let g:multi_cursor_exit_from_insert_mode=0
 let g:slime_target = "tmux"
 let g:slime_paste_file = "$HOME/.slime_paste"
-"set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -138,11 +140,6 @@ fun! <SID>StripTrailingWhitespaces()
   call cursor(l, c)
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-let g:dbext_default_profile_cm_main_20141110 = 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_main_20141110'
-let g:dbext_default_profile_cm_holy= 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_holy'
-let g:dbext_default_profile_cm_org_test= 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=cm_org_test'
-let g:dbext_default_profile_cm_main_test= 'type=PGSQL:user=postgres:passwd=postgres:host=172.16.9.54:port=6432:dbname=load_data_test'
 
 
 let g:ctrlp_working_path_mode = 'a'
@@ -206,6 +203,35 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
     \ ]
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
@@ -233,4 +259,37 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 
 " easytags
 let g:easytags_async = 1
+" Common
+map <C-c> "*y<CR>
+map <C-a> <ESC>gg<S-v>G<ESC>
+map <Leader>ag :Ag<SPACE>
+map <Leader>bi :PluginInstall<CR>
+map <Leader>ct :!ctags -R<CR>
+map <Leader>f :FixWhitespace<CR>
+map <Leader>n <C-w>v<C-h><SPACE><SPACE>
+map <Leader>nt :NERDTree<CR>
+map <Leader>q :q<CR>
+map <Leader>rm :Remove!<CR>
+map <Leader>sg :sp<CR>:grep<SPACE>
+map <Leader>sv :source ~/.vimrc<CR>
+map <Leader>te :tabe<SPACE>
+map <Leader>v "*p<CR>
+map <Leader>vi :tabe ~/.vimrc.local<CR>
+map <Leader>w :w<CR>
+nmap <CR> o<Esc>k
+nnoremap <S-CR> O<Esc>j
 
+" Rails
+map <Leader>a <ESC>ggVG<CR>
+map <Leader>ac :Rcontroller application<CR>
+map <Leader>ah :RVhelper application<CR>
+map <Leader>av :AV<CR>
+map <Leader>bb :!bundle install<CR>
+map <Leader>c :Rcontroller<SPACE>
+map <Leader>d <ESC>obinding.pry<ESC>
+map <Leader>dv <ESC>o- binding.pry<ESC>
+map <Leader>m :Rmodel<SPACE>
+map <Leader>rv :RV<CR>
+map <Leader>vc :RVcontroller<SPACE>
+map <Leader>vm :RVmodel<SPACE>
+map <Leader>vv :RVview<SPACE>
